@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
-import { View, Text, StyleSheet, TouchableNativeFeedback } from 'react-native'
+import {
+    View, Text, StyleSheet, TouchableNativeFeedback
+} from 'react-native'
 
 
 export default class Todo extends Component {

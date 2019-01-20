@@ -7,7 +7,7 @@
  */
 
 import React, {Component} from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import {StyleSheet, View, Text, PermissionsAndroid} from 'react-native';
 import TodoList from './components/todo-list';
 import AddTodo from './components/add-todo';
 import {
@@ -53,6 +53,24 @@ class Home extends Component {
     // }, 3000)
     this.state = {
       todos: []
+    }
+    this.requestMapsPermission()
+  }
+
+  async requestMapsPermission() {
+    try {
+      const isGranted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        {
+          'title': 'Todo app location access',
+          'message': 'We need your location do know where you are'
+        }
+      )
+      this.setState({
+        geolocationPermissionGranted: isGranted,
+      })
+    } catch (err) {
+      return;
     }
   }
 
