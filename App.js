@@ -7,13 +7,50 @@
  */
 
 import React, {Component} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, Text} from 'react-native';
 import TodoList from './components/todo-list';
 import AddTodo from './components/add-todo';
+import {
+  createStackNavigator, createAppContainer
+} from 'react-navigation';
 
-export default class App extends Component {
-  constructor() {
-    super();
+const DefaultNavigationOptions = {
+  headerStyle: {
+    backgroundColor: '#1564bf',
+    color: 'white'
+  },
+  headerTintColor: 'white',
+  headerTitleStyle: {
+    fontWeight: 'bold',
+    color: 'white'
+  },
+}
+
+class TodoDetails extends Component {
+  static navigationOptions = {
+    ...DefaultNavigationOptions,
+    title: 'Navigation Options',
+  }
+  render() {
+    return (
+      <View>
+        <Text>Mudei de página</Text>
+      </View>
+    )
+  }
+}
+
+class Home extends Component {
+  static navigationOptions = {
+    ...DefaultNavigationOptions,
+    title: 'Todo App',
+  }
+
+  constructor(props) {
+    super(props);
+    // setTimeout(() => {
+    //   this.props.navigation.navigate('TodoDetails')
+    // }, 3000)
     this.state = {
       todos: []
     }
@@ -21,7 +58,7 @@ export default class App extends Component {
 
   submit = (objText) => {
     this.setState((state) => {
-      return { todos: [...state.todos, objText] }
+      return { todos: [objText, ...state.todos] }
     })
   }
 
@@ -29,7 +66,7 @@ export default class App extends Component {
     return (
       <View style={styles.container}>
         <AddTodo submitFunc={this.submit} />
-        <TodoList todoList={this.state.todos} />
+        <TodoList todoList={this.state.todos} navigation={this.props.navigation} />
       </View>
     );
   }
@@ -42,3 +79,10 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start'
   },
 });
+
+const AppNavigator = createStackNavigator({
+  Home: { screen: Home },
+  TodoDetails: { screen: TodoDetails }
+})
+
+export default createAppContainer(AppNavigator);

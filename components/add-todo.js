@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
-import {View, TextInput, Button, StyleSheet} from 'react-native'
+import {View, TextInput, Button, StyleSheet} from 'react-native';
+import MyButton from './MyFuckingButton';
 
 export default class AddTodo extends Component {
     constructor() {
@@ -24,10 +25,16 @@ export default class AddTodo extends Component {
                     value={this.state.text}
                     style={styles.inputField}
                     />
-                <Button 
+                <Button style={styles.inputButton}
                     onPress={this.onPressButton}
-                    title=" + "
-                    style={styles.inputButton} />
+                    disabled={!this.state.text}
+                    color='#f44336'
+                    title="ADD"
+                />
+                {/* <MyButton
+                    onPress={this.onPressButton}
+                    title='ADD'
+                /> */}
             </View>
         )
     }
@@ -37,15 +44,18 @@ const styles = StyleSheet.create({
         width: '100%',
         padding: 15,
         flexDirection: 'row',
-        backgroundColor: '#a6bf8b',
+        alignItems: 'center',
+        backgroundColor: '#3584bf',
     },
     inputField: {
         flex: 1,
         borderRadius: 6,
-        borderWidth: 0.5,
+        padding: 5,
+        // borderWidth: 0.5,
         borderColor: '#000000',
         backgroundColor: '#FFF',
         marginRight: 10,
+        // padding: 0  
     },
     inputButton: {
         flexShrink: 0,
